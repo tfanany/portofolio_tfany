@@ -29,7 +29,7 @@
         <li><a class="nav-link" href="#projects">Portofolio</a></li>
         <li><a class="nav-link" href="#contact">Kontak</a></li>
       </ul>
-      <a class="nav-cta" href="mailto:3fanany@gmail.com">Hubungi Saya <span>↗</span></a>
+      <a class="nav-cta" href="#contact">Hubungi Saya <span>↗</span></a>
     </nav>
   </header>
 
@@ -151,7 +151,7 @@
           </p>
         </div>
         <div class="project-grid">
-          <a class="project-card reveal" href="" target="_blank"
+          <a class="project-card reveal" href="https://tfanany.github.io/portofolio_tfany/" target="_blank"
             rel="noopener noreferrer">
             <div class="project-art art-one"><span>PROJECT / 01</span>
               <div class="mock-window"><i></i><i></i><i></i>
@@ -168,7 +168,8 @@
               <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             </div>
           </a>
-          <a class="project-card reveal" href="fun-english-for-kids-standalone.html" target="_blank" rel="noopener noreferrer">
+          <a class="project-card reveal" href="aplikasi_tebakan.html" target="_blank"
+            rel="noopener noreferrer">
             <div class="project-art art-two"><span>PROJECT / 02</span>
               <div class="app-mock">
                 <div class="app-mock-badge"></div>
@@ -181,8 +182,10 @@
                 <p class="project-type">UI/UX DESIGN</p>
                 <h3>UI/UX Fun English for Kids</h3>
               </div><span class="project-arrow">↗</span>
-              <p class="project-desc">Desain antarmuka interaktif dan game edukasi tebak kata bahasa Inggris yang menyenangkan untuk anak-anak.</p>
-              <div class="tags"><span>UI/UX</span><span>Interactive</span><span>Kids App</span><span>Web Game</span></div>
+              <p class="project-desc">Desain antarmuka interaktif dan game edukasi tebak kata bahasa Inggris yang
+                menyenangkan untuk anak-anak.</p>
+              <div class="tags"><span>UI/UX</span><span>Interactive</span><span>Kids App</span><span>Web Game</span>
+              </div>
             </div>
           </a>
           <a class="project-card reveal" href="https://www.youtube.com/@animationprop" target="_blank"
@@ -211,14 +214,39 @@
 
     <section class="section contact-section" id="contact">
       <div class="container contact-panel reveal">
-        <div>
+        <div class="contact-info-col">
           <p class="section-label">04 / KONTAK</p>
           <h2>Punya ide menarik?<br><span>Mari terhubung.</span></h2>
-          <p class="contact-copy">Saya terbuka untuk berdiskusi, berbagi ide, dan menjalin kolaborasi.</p>
+          <p class="contact-copy">Saya terbuka untuk berdiskusi, berbagi ide, proyek baru, atau menjalin kolaborasi.
+            Silakan kirimkan pesan Anda melalui formulir di samping.</p>
+          <div class="contact-social-mini">
+            <a href="https://www.linkedin.com/in/tri-fanany-5a363a43a/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          </div>
         </div>
-        <div class="contact-links"><a href="mailto:3fanany@gmail.com"><span>Email</span><strong>My Email↗</strong></a><a
-            href="https://www.linkedin.com/in/tri-fanany-5a363a43a/" target="_blank"
-            rel="noreferrer"><span>LinkedIn</span><strong>Profil LinkedIn ↗</strong></a>
+
+        <form class="contact-form" id="contact-form" action="https://formsubmit.co/3fanany@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Pesan Baru dari Portofolio Tri Fanany!">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none">
+
+          <div class="form-group">
+            <label for="form-name">Nama</label>
+            <input type="text" id="form-name" name="name" placeholder="Nama Anda" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email">Email</label>
+            <input type="email" id="form-email" name="email" placeholder="nama@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="form-message">Deskripsi / Pesan</label>
+            <textarea id="form-message" name="message" rows="4"
+              placeholder="Tuliskan deskripsi ide, proyek, atau pesan Anda..." required></textarea>
+          </div>
+          <button type="submit" class="button button-primary form-submit-btn" id="form-submit-btn">
+            Kirim Pesan <span>↗</span>
+          </button>
+          <div class="form-status" id="form-status" role="alert"></div>
+        </form>
       </div>
     </section>
   </main>

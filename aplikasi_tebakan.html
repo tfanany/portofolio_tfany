@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fun English for Kids</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap">
+<style>
+  /* Tampilan siang hari yang ceria: langit biru muda, bukit hijau, matahari kuning. Sengaja satu tema terang (tanpa mode gelap). */
+  :root {
+    color-scheme: light;
+    --sky: #CFEDFF;
+    --blue: #2F9BFF;
+    --blue-d: #1A6FCB;
+    --sun: #FFD43B;
+    --sun-d: #E0A500;
+    --leaf: #4CCB6B;
+    --leaf-d: #2A9F49;
+    --white: #FFFFFF;
+    --ink: #19365C;
+    --muted: #4F6A8F;
+    --red: #FF6464;
+    --red-d: #D23B3B;
+    --line: #CFE3F7;
+    --line-d: #B3CEEA;
+    --font-display: 'Fredoka', 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;
+    --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-emoji: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background-color: var(--sky);
+    background-image: linear-gradient(#BCE5FF 0%, #E4F6FF 55%, #F6FCFF 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.45;
+    min-height: 100%;
+    padding-block: 14px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2, h3, p { margin: 0; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; text-wrap: balance; }
+  button { font: inherit; color: inherit; }
+  [hidden] { display: none !important; }
+  .emoji { font-family: var(--font-emoji); font-weight: 400; }
+  .sub { display: block; font-family: var(--font-body); font-weight: 700; font-size: .62em; opacity: .85; letter-spacing: .01em; }
+
+  /* Latar */
+  .scene { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .sun { position: absolute; top: 18px; right: 6%; width: 86px; height: 86px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 14px rgba(255, 212, 59, .32), 0 0 0 30px rgba(255, 212, 59, .16); }
+  .cloud { position: absolute; width: 130px; height: 44px; background: #fff; border-radius: 44px; opacity: .95; animation: drift 60s linear infinite; }
+  .cloud::before, .cloud::after { content: ""; position: absolute; background: #fff; border-radius: 50%; }
+  .cloud::before { width: 58px; height: 58px; left: 18px; top: -28px; }
+  .cloud::after { width: 74px; height: 74px; right: 14px; top: -38px; }
+  .cloud.c1 { top: 12%; left: -160px; }
+  .cloud.c2 { top: 30%; left: -160px; transform: scale(.7); animation-duration: 85s; animation-delay: -30s; }
+  .cloud.c3 { top: 5%; left: -160px; transform: scale(.55); animation-duration: 110s; animation-delay: -70s; }
+  .hill { position: absolute; left: -15%; right: -15%; bottom: -150px; height: 280px; background: #6FD98A; border-radius: 50% 50% 0 0; }
+  .hill.h2 { left: 30%; right: -40%; bottom: -170px; background: #55C973; }
+  @keyframes drift { to { left: 110%; } }
+
+  .app { max-width: 980px; margin: 0 auto; }
+
+  /* Bagian atas */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 4px; cursor: pointer; border-radius: 16px; text-align: left; }
+  .brand .logo { width: 46px; height: 46px; flex: none; }
+  .brand b { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--blue-d); line-height: 1; }
+  .brand b span { color: #E08A00; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; }
+  .vnote { margin: 14px auto 0; max-width: 520px; background: #FFF4BF; color: #6B4E00; border-radius: 16px; padding: 10px 14px; font-size: .95rem; text-align: left; }
+  @media (max-width: 480px) { .tool { padding: 0 12px; font-size: .95rem; min-height: 44px; } }
+  .tool { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; background: #fff; border: 3px solid var(--line); border-radius: 999px; font-family: var(--font-display); font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 0 var(--line-d); }
+  .tool[aria-pressed="false"] { color: var(--muted); background: #EEF4FA; }
+  .tool:disabled { opacity: .5; cursor: not-allowed; }
+  .tool:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--line-d); }
+
+  /* Tombol besar */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 64px; padding: 0 34px; border: 0; border-radius: 22px; background: var(--sun); color: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: clamp(1.25rem, 3.6vw, 1.7rem); line-height: 1.05; text-align: center; cursor: pointer; box-shadow: 0 7px 0 var(--sun-d); transition: transform .1s ease, box-shadow .1s ease, filter .15s ease; }
+  .btn:hover { filter: brightness(1.04); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 2px 0 var(--sun-d); }
+  .btn.blue { background: var(--blue-d); color: #fff; box-shadow: 0 7px 0 #0F4B91; }
+  .btn.blue:active { box-shadow: 0 2px 0 #0F4B91; }
+  .btn.green { background: var(--leaf); box-shadow: 0 7px 0 var(--leaf-d); }
+  .btn.green:active { box-shadow: 0 2px 0 var(--leaf-d); }
+  .btn.white { background: #fff; box-shadow: 0 7px 0 var(--line-d); }
+  .btn.white:active { box-shadow: 0 2px 0 var(--line-d); }
+  .btn.small { min-height: 52px; padding: 0 22px; font-size: 1.1rem; border-radius: 18px; box-shadow: 0 5px 0 var(--line-d); }
+  .btn:focus-visible, .tool:focus-visible, .brand:focus-visible, .pick:focus-visible, .opt:focus-visible, .field input:focus-visible { outline: 4px solid var(--blue); outline-offset: 3px; }
+
+  .view { animation: pop .35s ease both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+  .title { font-size: clamp(1.9rem, 6vw, 2.8rem); color: var(--ink); text-align: center; }
+  .title .sub { color: var(--muted); margin-top: 4px; }
+  .nav { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+
+  /* Beranda */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; align-items: center; padding: clamp(20px, 5vw, 40px); background: rgba(255, 255, 255, .92); border-radius: 36px; box-shadow: 0 10px 0 rgba(25, 54, 92, .1); }
+  .hero .mascot-big { width: min(100%, 300px); margin: 0 auto; display: block; }
+  .bubble { position: relative; background: var(--sun); border-radius: 26px; padding: 14px 20px; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.2rem, 3.4vw, 1.6rem); margin-bottom: 18px; }
+  .bubble::after { content: ""; position: absolute; left: -12px; top: 26px; border: 12px solid transparent; border-right-color: var(--sun); border-left: 0; }
+  .hero h1 { font-size: clamp(2.4rem, 7.5vw, 3.8rem); color: var(--blue-d); letter-spacing: -.01em; }
+  .hero h1 span { color: #E08A00; }
+  .hero .lead { margin-top: 10px; color: var(--muted); font-size: 1.1rem; max-width: 34ch; }
+  .field { display: grid; gap: 6px; margin-top: 18px; max-width: 360px; }
+  .field label { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+  .field input { min-height: 56px; border: 4px solid var(--line); border-radius: 18px; padding: 0 16px; font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; color: var(--ink); background: #fff; }
+  .hero .btn { margin-top: 22px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .stat { display: flex; align-items: center; gap: 10px; background: #EAF6FF; border-radius: 18px; padding: 8px 16px; font-family: var(--font-display); font-weight: 600; }
+  .stat .star { color: #F2A900; font-size: 1.5rem; line-height: 1; }
+  .stat b { font-size: 1.5rem; }
+  .stat small { font-family: var(--font-body); font-weight: 700; color: var(--muted); font-size: .85rem; display: block; line-height: 1.1; }
+  @media (max-width: 720px) { .hero { grid-template-columns: 1fr; text-align: center; } .hero .mascot-big { width: 190px; } .bubble::after { left: 50%; top: auto; bottom: -12px; margin-left: -12px; border: 12px solid transparent; border-top-color: var(--sun); border-bottom: 0; } .field { margin-inline: auto; } .stats { justify-content: center; } .hero .lead { margin-inline: auto; } }
+
+  /* Kartu pilihan */
+  .picks { display: grid; gap: 18px; margin-top: 24px; }
+  .picks.grades { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .picks.cats { grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 16px; }
+  .pick { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 20px 14px 18px; background: #fff; border: 5px solid var(--tone, var(--line)); border-radius: 30px; box-shadow: 0 8px 0 var(--tone-d, var(--line-d)); cursor: pointer; text-align: center; transition: transform .12s ease, box-shadow .12s ease; }
+  .pick:hover { transform: translateY(-4px); }
+  .pick:active { transform: translateY(5px); box-shadow: 0 2px 0 var(--tone-d, var(--line-d)); }
+  .pick.t-blue { --tone: #6BBBFF; --tone-d: #3F95E0; --chip: #E1F2FF; }
+  .pick.t-green { --tone: #5FD67E; --tone-d: #2FAE50; --chip: #DDF8E4; }
+  .pick.t-yellow { --tone: #FFD43B; --tone-d: #E0A500; --chip: #FFF4BF; }
+  .pick .ico { display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: var(--chip, #E1F2FF); font-family: var(--font-emoji); font-weight: 400; font-size: 3.2rem; line-height: 1; }
+  .pick.grade .ico { width: 118px; height: 118px; font-size: 4.4rem; }
+  .pick h2 { font-size: 1.6rem; }
+  .pick.cat h2 { font-size: 1.3rem; }
+  .pick .sub { color: var(--muted); font-size: .88rem; }
+  .pick .tag { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--ink); background: var(--chip, #E1F2FF); padding: 2px 14px; border-radius: 999px; }
+  .stars { display: inline-flex; gap: 2px; font-size: 1.5rem; line-height: 1; color: #D6E3F0; }
+  .stars .on { color: #F2A900; }
+  .best { font-size: .85rem; color: var(--muted); min-height: 1.2em; }
+  .badge-grade { display: inline-block; padding: 4px 16px; border-radius: 999px; background: #fff; border: 3px solid var(--line); font-family: var(--font-display); font-weight: 600; }
+
+  /* Kuis */
+  .qhead { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+  .qhead .count { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; background: #fff; border-radius: 999px; padding: 6px 16px; white-space: nowrap; }
+  .qhead .mid { min-width: 0; }
+  .progress { height: 20px; background: rgba(255, 255, 255, .85); border: 3px solid #fff; border-radius: 99px; overflow: hidden; box-shadow: inset 0 2px 0 rgba(25, 54, 92, .12); }
+  .progress i { display: block; height: 100%; width: 0; background: linear-gradient(var(--leaf), var(--leaf-d)); border-radius: 99px; transition: width .4s ease; }
+  .scorepill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 700; background: #fff; border-radius: 999px; padding: 6px 14px; }
+  .scorepill .star { color: #F2A900; font-size: 1.3rem; line-height: 1; }
+  .qinfo { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 12px 2px 12px; }
+  .timer { display: flex; align-items: center; gap: 10px; min-width: 170px; flex: 1; max-width: 300px; justify-content: flex-end; }
+  .timer .tnum { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; min-width: 3ch; text-align: right; font-variant-numeric: tabular-nums; }
+  .timer .tbar { flex: 1; height: 14px; border-radius: 99px; background: rgba(255, 255, 255, .85); overflow: hidden; border: 3px solid #fff; }
+  .timer .tbar i { display: block; height: 100%; width: 100%; background: var(--sun); border-radius: 99px; transition: width .12s linear; }
+  .timer.low .tbar i { background: var(--red); }
+  .timer.low .tnum { color: var(--red-d); }
+
+  .qcard { background: #fff; border-radius: 34px; padding: clamp(16px, 4vw, 28px); box-shadow: 0 9px 0 rgba(25, 54, 92, .1); text-align: center; }
+  .vis { display: grid; place-items: center; min-height: clamp(110px, 24vw, 180px); font-family: var(--font-emoji); font-weight: 400; font-size: clamp(5rem, 17vw, 8.5rem); line-height: 1.05; }
+  .vis.many { font-size: clamp(2.3rem, 9vw, 3.8rem); line-height: 1.2; }
+  .vis .bigtext { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 13vw, 5.4rem); color: var(--blue-d); }
+  .vis .bigtext.long { font-size: clamp(2.2rem, 9vw, 3.8rem); }
+  .vis .swatch { width: clamp(120px, 30vw, 180px); aspect-ratio: 1; border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 0 5px var(--line), 0 9px 0 rgba(25, 54, 92, .16); }
+  .t2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 9vw, 3.4rem); letter-spacing: .22em; color: var(--blue-d); margin-top: 2px; }
+  .promptrow { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+  .prompt { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.4rem, 4.8vw, 2.1rem); line-height: 1.3; }
+  .blank { display: inline-block; min-width: 3.4ch; border-bottom: 5px dashed var(--blue); margin: 0 .12em; transform: translateY(-.05em); }
+  .listen { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--blue-d); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; cursor: pointer; box-shadow: 0 5px 0 #0F4B91; }
+  .listen:active { transform: translateY(4px); box-shadow: 0 1px 0 #0F4B91; }
+  .listen:focus-visible { outline: 4px solid var(--blue); outline-offset: 3px; }
+
+  .opts { display: grid; gap: 14px; margin-top: 22px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .opts { grid-template-columns: 1fr 1fr; } }
+  .opts.two { grid-template-columns: 1fr 1fr; }
+  .opt { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 78px; padding: 12px 52px 12px 14px; background: #fff; color: var(--ink); border: 4px solid var(--line); border-radius: 24px; box-shadow: 0 7px 0 var(--line-d); font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 4.2vw, 1.75rem); line-height: 1.15; text-align: left; cursor: pointer; transition: transform .08s ease, box-shadow .08s ease, border-color .15s ease, background .15s ease; }
+  .opt .n { flex: none; display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: #E3F1FF; color: var(--blue-d); font-size: 1rem; }
+  .opt .t { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .opts.two .opt { justify-content: center; text-align: center; padding: 12px 14px; }
+  .opts.two .opt .n { position: absolute; top: 8px; left: 8px; width: 1.7rem; height: 1.7rem; font-size: .85rem; }
+  .opts.two .opt .t { flex: none; }
+  .opt.pic { min-height: clamp(100px, 22vw, 136px); font-family: var(--font-emoji); font-weight: 400; font-size: clamp(3.4rem, 12vw, 5rem); }
+  .opt:hover:not(:disabled) { border-color: var(--blue); background: #F1F9FF; }
+  .opt:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 2px 0 var(--line-d); }
+  .opt:disabled { cursor: default; }
+  .opt::after { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 1.7rem; font-family: var(--font-display); font-weight: 700; }
+  .opts.two .opt::after { top: 8px; right: 12px; transform: none; font-size: 1.4rem; }
+  .opt.right { background: #DDF8E3; border-color: var(--leaf-d); box-shadow: 0 7px 0 var(--leaf-d); }
+  .opt.right::after { content: "\2713"; color: var(--leaf-d); }
+  .opt.right .n { background: var(--leaf-d); color: #fff; }
+  .opt.wrong { background: #FFE3E3; border-color: var(--red); box-shadow: 0 7px 0 var(--red-d); animation: shake .45s ease; }
+  .opt.wrong::after { content: "\2717"; color: var(--red-d); }
+  .opt.dim { opacity: .55; }
+  @keyframes shake { 20% { transform: translateX(-9px); } 40% { transform: translateX(9px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
+
+  .dock { position: sticky; bottom: 0; margin-top: 16px; padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 5; }
+  .dock .inner { display: flex; align-items: center; gap: 14px; background: #fff; border: 5px solid var(--leaf); border-radius: 30px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 0 rgba(25, 54, 92, .16); animation: pop .3s ease both; }
+  .dock.bad .inner { border-color: var(--red); }
+  .dock .mascot { width: 76px; flex: none; }
+  .dock .msg { flex: 1; min-width: 0; }
+  .dock h3 { font-size: clamp(1.4rem, 4.5vw, 1.9rem); color: var(--leaf-d); }
+  .dock.bad h3 { color: var(--red-d); }
+  .dock .msg p { color: var(--muted); font-size: 1.05rem; overflow-wrap: anywhere; }
+  .dock .msg p b { color: var(--ink); }
+  @media (max-width: 560px) { .dock .inner { flex-wrap: wrap; } .dock .btn { width: 100%; } .dock .mascot { width: 62px; } }
+  .quit { min-height: 48px; padding: 0 18px; }
+
+  /* Hasil */
+  .result { background: rgba(255, 255, 255, .94); border-radius: 36px; padding: clamp(20px, 5vw, 38px); text-align: center; box-shadow: 0 10px 0 rgba(25, 54, 92, .1); }
+  .result .mascot { width: 150px; margin: 0 auto; display: block; }
+  .rstars { display: flex; justify-content: center; gap: 6px; font-size: clamp(3rem, 12vw, 4.6rem); line-height: 1; color: #D6E3F0; margin: 8px 0 4px; }
+  .rstars span.on { color: #F2A900; animation: starpop .5s ease both; }
+  .rstars span:nth-child(2).on { animation-delay: .15s; }
+  .rstars span:nth-child(3).on { animation-delay: .3s; }
+  @keyframes starpop { from { transform: scale(0) rotate(-40deg); } 70% { transform: scale(1.25) rotate(8deg); } to { transform: none; } }
+  .rscore { font-family: var(--font-display); font-weight: 700; font-size: clamp(4.4rem, 20vw, 7rem); line-height: 1; color: var(--blue-d); font-variant-numeric: tabular-nums; }
+  .rscore small { font-size: .32em; color: var(--muted); font-weight: 600; margin-left: 6px; }
+  .rmsg { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 5vw, 2.1rem); margin-top: 8px; }
+  .rmsg .sub { color: var(--muted); margin-top: 2px; }
+  .newbest { display: inline-block; margin-top: 12px; background: var(--sun); border-radius: 999px; padding: 6px 18px; font-family: var(--font-display); font-weight: 700; animation: starpop .5s ease both; }
+  .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 24px 0 8px; }
+  .trio div { border-radius: 24px; padding: 14px 8px; font-family: var(--font-display); font-weight: 600; }
+  .trio b { display: block; font-size: clamp(2rem, 8vw, 3rem); line-height: 1.05; }
+  .trio .ok { background: #DDF8E3; color: #1F7F3B; }
+  .trio .no { background: #FFE3E3; color: var(--red-d); }
+  .trio .bst { background: #FFF4BF; color: #8A6200; }
+  .trio span { font-size: .95rem; }
+  .review { margin-top: 22px; text-align: left; }
+  .review h3 { font-size: 1.3rem; margin-bottom: 8px; text-align: center; }
+  .review ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .review li { display: flex; gap: 12px; align-items: center; background: #F3F9FF; border-radius: 18px; padding: 10px 14px; }
+  .review li .emoji { font-size: 2rem; line-height: 1; flex: none; min-width: 2.2rem; text-align: center; }
+  .review li .rt { min-width: 0; overflow-wrap: anywhere; font-size: 1rem; }
+  .review li .rt b { color: var(--leaf-d); }
+  .rbtns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 26px; }
+
+  /* Jendela konfirmasi */
+  .modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(25, 54, 92, .55); }
+  .modal .box { width: min(440px, 100%); background: #fff; border-radius: 32px; padding: 26px 22px; text-align: center; box-shadow: 0 10px 0 rgba(25, 54, 92, .2); animation: pop .25s ease both; }
+  .modal .mascot { width: 100px; margin: 0 auto 6px; display: block; }
+  .modal h2 { font-size: 1.8rem; }
+  .modal p { color: var(--muted); margin-top: 6px; }
+  .modal .rbtns { margin-top: 20px; }
+
+  /* Kembang api bintang */
+  .burst { position: fixed; z-index: 60; pointer-events: none; font-size: 1.8rem; line-height: 1; animation: burst .9s ease-out forwards; }
+  @keyframes burst { from { opacity: 1; transform: translate(0, 0) scale(.6); } to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.3) rotate(var(--r)); } }
+
+  .wing-r { transform-origin: 112px 104px; animation: wave 1.2s ease-in-out infinite; }
+  @keyframes wave { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-28deg); } }
+  .bob { animation: bob 2.4s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .brand b { font-size: 1.15rem; }
+    .qhead { grid-template-columns: auto minmax(0, 1fr); }
+    .qhead .scorepill { grid-column: 1 / -1; justify-self: start; }
+    .picks.cats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .pick .ico { width: 76px; height: 76px; font-size: 2.6rem; }
+    .pick.cat h2 { font-size: 1.1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="scene" aria-hidden="true">
+  <div class="sun"></div>
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+  <div class="hill"></div><div class="hill h2"></div>
+</div>
+
+<div class="app">
+  <header class="top">
+    <button class="brand" id="brand" type="button" aria-label="Fun English for Kids, back to home">
+      <svg class="logo" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="88" r="58" fill="#FFD43B"/><circle cx="62" cy="80" r="9" fill="#19365C"/><circle cx="98" cy="80" r="9" fill="#19365C"/><path d="M70 96 L90 96 L80 110 Z" fill="#FF9A3C"/></svg>
+      <b>Fun <span>English</span> for Kids</b>
+    </button>
+    <div class="tools">
+      <button class="tool" id="t-music" type="button" aria-pressed="true"></button>
+      <button class="tool" id="t-voice" type="button" aria-pressed="true"></button>
+      <button class="tool" id="t-sound" type="button" aria-pressed="true"></button>
+      <button class="tool" id="t-timer" type="button" aria-pressed="true"></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- BERANDA -->
+    <section class="view" id="v-home" aria-labelledby="h-home">
+      <div class="hero">
+        <svg id="home-mascot" class="mascot-big" viewBox="0 0 160 160" aria-hidden="true"></svg>
+        <div>
+          <div class="bubble" id="greet">Hello, friend!<span class="sub">Halo! Ayo belajar bahasa Inggris.</span></div>
+          <h1 id="h-home">Fun <span>English</span> for Kids</h1>
+          <p class="lead">Play quiz games and learn new English words every day!</p>
+          <div class="field">
+            <label for="name">What is your name? <span class="sub" style="display:inline">(Siapa namamu?)</span></label>
+            <input id="name" type="text" maxlength="14" autocomplete="off" placeholder="Type your name">
+          </div>
+          <button class="btn" id="play" type="button">Let's Play! <span class="sub" style="display:none"></span></button>
+          <div class="stats">
+            <div class="stat"><span class="star" aria-hidden="true">&#9733;</span><div><b id="st-stars">0</b><small>Stars / Bintang</small></div></div>
+            <div class="stat"><span class="emoji" aria-hidden="true">🎮</span><div><b id="st-played">0</b><small>Games / Permainan</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILIH KELAS -->
+    <section class="view" id="v-grade" hidden aria-labelledby="h-grade">
+      <div class="nav"><button class="btn white small" data-nav="home" type="button">&larr; Back</button></div>
+      <h2 class="title" id="h-grade" tabindex="-1">Choose your grade<span class="sub">Pilih kelasmu</span></h2>
+      <div class="picks grades" id="grade-list"></div>
+    </section>
+
+    <!-- PILIH KATEGORI -->
+    <section class="view" id="v-cats" hidden aria-labelledby="h-cats">
+      <div class="nav"><button class="btn white small" data-nav="grade" type="button">&larr; Back</button><span class="badge-grade" id="cats-grade"></span></div>
+      <h2 class="title" id="h-cats" tabindex="-1">Pick a quiz<span class="sub">Pilih kuis yang kamu suka</span></h2>
+      <div class="picks cats" id="cat-list"></div>
+    </section>
+
+    <!-- KUIS -->
+    <section class="view" id="v-quiz" hidden aria-label="Quiz">
+      <div class="qhead">
+        <button class="btn white small quit" id="quit" type="button" aria-label="Stop the quiz">&#10005;</button>
+        <div class="mid"><div class="progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" id="prog"><i></i></div></div>
+        <span class="scorepill"><span class="star" aria-hidden="true">&#9733;</span><span id="q-score">0</span></span>
+      </div>
+      <div class="qinfo">
+        <span class="count" id="q-count" style="font-family:var(--font-display);font-weight:700;font-size:1.2rem"></span>
+        <div class="timer" id="timer"><span class="emoji" aria-hidden="true">⏱️</span><div class="tbar"><i id="tfill"></i></div><span class="tnum" id="tnum">30</span></div>
+      </div>
+      <div class="qcard">
+        <div class="vis" id="vis" aria-hidden="true"></div>
+        <div class="t2" id="t2" hidden></div>
+        <div class="promptrow">
+          <h2 class="prompt" id="prompt"></h2>
+          <button class="listen" id="listen" type="button"><span class="emoji" aria-hidden="true">🔊</span> Listen</button>
+        </div>
+        <p class="vnote" id="vnote" hidden>Can't hear the voice? Turn up the media volume. If it stays silent, this phone may not have an English voice installed. <i>Suara tidak terdengar? Naikkan volume, atau pasang suara bahasa Inggris di pengaturan ponsel.</i></p>
+        <div class="opts" id="opts" role="group" aria-label="Answers"></div>
+      </div>
+      <div class="dock" id="dock" hidden aria-live="polite">
+        <div class="inner">
+          <svg class="mascot" id="dock-mascot" viewBox="0 0 160 160" aria-hidden="true"></svg>
+          <div class="msg"><h3 id="fb-title"></h3><p id="fb-text"></p></div>
+          <button class="btn green" id="next" type="button">Next &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HASIL -->
+    <section class="view" id="v-result" hidden aria-labelledby="h-result">
+      <div class="result">
+        <svg class="mascot bob" id="res-mascot" viewBox="0 0 160 160" aria-hidden="true"></svg>
+        <div class="rstars" id="rstars" aria-hidden="true"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span></div>
+        <h2 id="h-result" tabindex="-1" style="font-size:1.3rem;color:var(--muted)">Your score</h2>
+        <div class="rscore"><span id="r-score">0</span><small>/ 100</small></div>
+        <div class="rmsg" id="r-msg"></div>
+        <div class="newbest" id="r-new" hidden>&#9733; New best score! &#9733;</div>
+        <div class="trio">
+          <div class="ok"><b id="r-ok">0</b><span>Correct<br>Benar</span></div>
+          <div class="no"><b id="r-no">0</b><span>Wrong<br>Salah</span></div>
+          <div class="bst"><b id="r-best">0</b><span>Best<br>Terbaik</span></div>
+        </div>
+        <div class="review" id="review" hidden>
+          <h3>Let's practice these!</h3>
+          <ul id="review-list"></ul>
+        </div>
+        <div class="rbtns">
+          <button class="btn" id="again" type="button">Play Again<span class="sub">Main Lagi</span></button>
+          <button class="btn blue" id="more" type="button">More Quizzes<span class="sub">Kuis Lain</span></button>
+          <button class="btn white" id="home" type="button">Home<span class="sub">Beranda</span></button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="box">
+    <svg class="mascot" id="modal-mascot" viewBox="0 0 160 160" aria-hidden="true"></svg>
+    <h2 id="m-title">Stop playing?</h2>
+    <p>Your answers will not be saved. Jawabanmu tidak akan disimpan.</p>
+    <div class="rbtns">
+      <button class="btn green small" id="m-stay" type="button">Keep playing</button>
+      <button class="btn white small" id="m-leave" type="button">Yes, exit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+//#DATA-START
+/* ===== Data soal dan generator (tanpa DOM) ===== */
+const R = (n) => Math.floor(Math.random() * n);
+const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = R(i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const sample = (a, n) => shuffle(a).slice(0, n);
+const uniq = (a) => [...new Set(a)];
+/* Baris tulisan tangan: [pertanyaan, visual, jawaban benar, jawaban salah, opsi gambar] */
+const H = (rows) => rows.map((r) => ({ p: r[0], v: r[1], a: r[2], w: r[3], pic: !!r[4] }));
+/* Visual: "#warna" = lingkaran warna, "=teks" = teks besar, selain itu emoji */
+
+const AB = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const LW = { A: ['Apple', '🍎'], B: ['Ball', '⚽'], C: ['Cat', '🐱'], D: ['Dog', '🐶'], E: ['Egg', '🥚'], F: ['Fish', '🐟'], G: ['Grapes', '🍇'], H: ['Hat', '🎩'], I: ['Ice cream', '🍦'], J: ['Jet', '✈️'], K: ['Key', '🔑'], L: ['Lion', '🦁'], M: ['Moon', '🌙'], N: ['Nose', '👃'], O: ['Orange', '🍊'], P: ['Pizza', '🍕'], Q: ['Queen', '👸'], R: ['Rainbow', '🌈'], S: ['Sun', '☀️'], T: ['Tree', '🌳'], U: ['Umbrella', '☂️'], V: ['Violin', '🎻'], W: ['Watch', '⌚'], Y: ['Yarn', '🧶'], Z: ['Zebra', '🦓'] };
+const CONF = { a: ['o', 'e', 'u'], b: ['d', 'p', 'q'], c: ['e', 'o', 's'], d: ['b', 'p', 'q'], e: ['c', 'o', 'a'], f: ['t', 'l', 'h'], g: ['q', 'y', 'j'], h: ['n', 'b', 'k'], i: ['j', 'l', 't'], j: ['i', 'g', 'y'], k: ['h', 'x', 'y'], l: ['i', 't', 'k'], m: ['n', 'w', 'h'], n: ['m', 'u', 'r'], o: ['a', 'c', 'e'], p: ['q', 'b', 'd'], q: ['p', 'd', 'b'], r: ['n', 'v', 'i'], s: ['z', 'c', 'e'], t: ['f', 'l', 'i'], u: ['n', 'v', 'w'], v: ['u', 'w', 'y'], w: ['v', 'm', 'u'], x: ['k', 'z', 'y'], y: ['v', 'g', 'j'], z: ['s', 'x', 'n'] };
+const W3 = [['CAT', '🐱'], ['DOG', '🐶'], ['SUN', '☀️'], ['PIG', '🐷'], ['HAT', '🎩'], ['BUS', '🚌'], ['CUP', '☕'], ['BED', '🛏️'], ['FOX', '🦊'], ['EGG', '🥚'], ['PEN', '🖊️'], ['BEE', '🐝'], ['COW', '🐮']];
+const W4 = [['BOOK', '📖'], ['FISH', '🐟'], ['MOON', '🌙'], ['STAR', '⭐'], ['TREE', '🌳'], ['BIRD', '🐦'], ['CAKE', '🍰'], ['DUCK', '🦆'], ['FROG', '🐸'], ['APPLE', '🍎'], ['BALL', '⚽'], ['HOUSE', '🏠'], ['TRAIN', '🚆'], ['PIZZA', '🍕']];
+const startQs = (n) => sample(Object.keys(LW), n).map((L) => ({ p: `What letter does "${LW[L][0]}" start with?`, v: LW[L][1], a: L, w: AB.filter((x) => x !== L) }));
+const missQs = (words, n) => sample(words, n).map(([w, e]) => { const i = R(w.length); const a = w[i]; return { p: 'Which letter is missing?', v: e, t2: w.split('').map((c, k) => (k === i ? '_' : c)).join(' '), a, w: AB.filter((x) => x !== a) }; });
+const nextQs = (n) => sample(AB.slice(0, 25), n).map((L) => { const a = AB[AB.indexOf(L) + 1]; return { p: `Which letter comes after ${L}?`, v: `=${L}  →  ?`, a, w: AB.filter((x) => x !== a && x !== L) }; });
+const beforeQs = (n) => sample(AB.slice(1), n).map((L) => { const a = AB[AB.indexOf(L) - 1]; return { p: `Which letter comes before ${L}?`, v: `=?  ←  ${L}`, a, w: AB.filter((x) => x !== a && x !== L) }; });
+const smallQs = (n) => sample(AB, n).map((L) => { const s = L.toLowerCase(); return { p: `Which is the small letter of "${L}"?`, v: '=' + L, a: s, w: CONF[s] }; });
+const betweenQs = (n) => sample(AB.slice(1, 25), n).map((L) => { const i = AB.indexOf(L); return { p: `Which letter comes between ${AB[i - 1]} and ${AB[i + 1]}?`, v: `=${AB[i - 1]}  ?  ${AB[i + 1]}`, a: L, w: AB.filter((x) => x !== L && x !== AB[i - 1] && x !== AB[i + 1]) }; });
+const vowelQs = (n) => sample('AEIOU'.split(''), n).map((a) => ({ p: 'Which letter is a vowel?', v: '🔤', a, w: AB.filter((x) => !'AEIOU'.includes(x)) }));
+
+const NW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+const TENS = { 30: 'thirty', 40: 'forty', 50: 'fifty', 60: 'sixty', 70: 'seventy', 80: 'eighty', 90: 'ninety' };
+const near = (a, lo, hi) => { const s = []; for (let d = 1; d <= 8; d++) { if (a - d >= lo) s.push(String(a - d)); if (a + d <= hi) s.push(String(a + d)); } return s.slice(0, 6); };
+const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+const CNT = ['🍎', '⭐', '🐟', '🎈', '🐥', '🚗', '🍪', '🌸', '⚽', '🦋'];
+const countQs = (n) => sample(range(1, 10), n).map((k) => ({ p: 'How many do you see?', v: sample(CNT, 1)[0].repeat(k), a: String(k), w: near(k, 1, 10) }));
+const w2d = (n, lo, hi) => sample(range(lo, hi), n).map((k) => ({ p: `Which number is "${NW[k]}"?`, v: '=' + NW[k], a: String(k), w: near(k, 0, Math.max(12, k + 4)) }));
+const d2w = (n, lo, hi) => sample(range(lo, hi), n).map((k) => ({ p: `How do we say ${k}?`, v: '=' + k, a: NW[k], w: near(k, 0, 20).map((x) => NW[+x]) }));
+const addQs = (n, lo, hi, plain) => { const out = []; let guard = 0; while (out.length < n && guard++ < 200) { const a = 1 + R(9), b = 1 + R(9), s = a + b; if (s < lo || s > hi || out.some((o) => o.a === String(s))) continue; out.push(plain ? { p: `${a} + ${b} = ?`, v: `=${a} + ${b} = ?`, a: String(s), w: near(s, 0, 12) } : { p: `What is ${NW[a]} plus ${NW[b]}?`, v: `=${a} + ${b}`, a: String(s), w: near(s, 0, 24) }); } return out; };
+const subQs = (n) => { const out = []; let guard = 0; while (out.length < n && guard++ < 200) { const x = 11 + R(10), y = 2 + R(8), r = x - y; if (out.some((o) => o.a === String(r))) continue; out.push({ p: `What is ${x} minus ${y}?`, v: `=${x} − ${y}`, a: String(r), w: near(r, 0, 24) }); } return out; };
+const tensQs = () => { const a = sample(Object.keys(TENS).map(Number), 2); const q1 = { p: `Which number is "${TENS[a[0]]}"?`, v: '=' + TENS[a[0]], a: String(a[0]), w: [String(a[0] / 10), String(a[0] + 10), String(a[0] - 10), String(a[0] / 10 + 10)] }; const t = a[1]; const q2 = { p: `How do we say ${t}?`, v: '=' + t, a: TENS[t], w: [NW[t / 10 + 10], NW[t / 10], ...Object.keys(TENS).map(Number).filter((x) => x !== t).map((x) => TENS[x])] }; return [q1, q2]; };
+const PAT = [['2, 4, 6, ?', 8], ['5, 10, 15, ?', 20], ['10, 20, 30, ?', 40], ['3, 6, 9, ?', 12], ['1, 3, 5, ?', 7]];
+const patQs = (n) => sample(PAT, n).map(([s, a]) => ({ p: 'What number comes next?', v: '=' + s, a: String(a), w: near(a, 0, 30) }));
+const bigQs = () => { const nums = sample(range(11, 99), 4); const big = Math.random() < 0.5; const a = big ? Math.max(...nums) : Math.min(...nums); return [{ p: big ? 'Which number is the biggest?' : 'Which number is the smallest?', v: '🔢', a: String(a), w: nums.filter((x) => x !== a).map(String) }]; };
+
+const CN = [['Red', '#E53935'], ['Blue', '#1E88E5'], ['Yellow', '#FDD835'], ['Green', '#43A047'], ['Orange', '#FB8C00'], ['Purple', '#8E24AA'], ['Pink', '#F06BA8'], ['Brown', '#795548'], ['Black', '#212121'], ['White', '#FFFFFF'], ['Gray', '#9E9E9E']];
+const CNAMES = CN.map((c) => c[0]);
+const CI = [['🍌', 'banana', 'Yellow'], ['🍅', 'tomato', 'Red'], ['🥕', 'carrot', 'Orange'], ['🍇', 'grapes', 'Purple'], ['🐸', 'frog', 'Green'], ['🐻', 'bear', 'Brown'], ['🐘', 'elephant', 'Gray'], ['🍓', 'strawberry', 'Red'], ['🌻', 'sunflower', 'Yellow'], ['🐷', 'pig', 'Pink'], ['🍋', 'lemon', 'Yellow'], ['🍆', 'eggplant', 'Purple']];
+
+const AN = { Cat: ['🐱', 'Meow'], Dog: ['🐶', 'Woof'], Cow: ['🐮', 'Moo'], Duck: ['🦆', 'Quack'], Pig: ['🐷', 'Oink'], Sheep: ['🐑', 'Baa'], Lion: ['🦁', 'Roar'], Frog: ['🐸', 'Ribbit'], Horse: ['🐴', 'Neigh'], Chicken: ['🐔', 'Cluck'], Bird: ['🐦', 'Tweet'], Fish: ['🐟', ''], Rabbit: ['🐰', ''], Elephant: ['🐘', ''], Monkey: ['🐵', ''], Bear: ['🐻', ''], Tiger: ['🐯', ''], Giraffe: ['🦒', ''], Butterfly: ['🦋', ''], Turtle: ['🐢', ''], Bee: ['🐝', ''], Whale: ['🐳', ''], Dolphin: ['🐬', ''], Shark: ['🦈', ''], Octopus: ['🐙', ''], Eagle: ['🦅', ''], Owl: ['🦉', ''], Zebra: ['🦓', ''] };
+const opt = (n) => `${AN[n][0]} ${n}`;
+const picName = (names, n) => sample(names, n).map((nm) => ({ p: 'What animal is this?', v: AN[nm][0], a: nm, w: names.filter((x) => x !== nm) }));
+const groupQ = (p, v, good, bad) => ({ p, v, a: opt(sample(good, 1)[0]), w: bad.map(opt) });
+const BABY = [['Cat', 'Kitten'], ['Dog', 'Puppy'], ['Cow', 'Calf'], ['Sheep', 'Lamb'], ['Chicken', 'Chick'], ['Duck', 'Duckling']];
+const RID = [['I have a very long neck.', 'Giraffe'], ['I have a long trunk and big ears.', 'Elephant'], ['I am the king of the jungle.', 'Lion'], ['I carry my house on my back.', 'Turtle'], ['I love bananas and I climb trees.', 'Monkey'], ['I hop and I have long ears.', 'Rabbit']];
+
+const FR = [['Apple', '🍎'], ['Banana', '🍌'], ['Orange', '🍊'], ['Grapes', '🍇'], ['Strawberry', '🍓'], ['Watermelon', '🍉'], ['Pineapple', '🍍'], ['Cherry', '🍒'], ['Lemon', '🍋'], ['Pear', '🍐'], ['Peach', '🍑'], ['Coconut', '🥥']];
+const FNAMES = FR.map((f) => f[0]);
+const FE = Object.fromEntries(FR);
+const FCLUE = { Apple: 'It is red or green and crunchy.', Banana: 'It is long and yellow. Monkeys love it.', Orange: 'It is round and orange. We drink its juice.', Grapes: 'They are small and sweet. They grow in bunches.', Strawberry: 'It is red with tiny seeds on the outside.', Watermelon: 'It is big and green outside, red and juicy inside.', Pineapple: 'It has a spiky crown on top.', Cherry: 'They are small and red, and they come in pairs.', Lemon: 'It is yellow and very sour.', Pear: 'It is green and shaped like a bell.', Peach: 'It is soft and fuzzy, with a big seed inside.', Coconut: 'It is brown and hairy, with sweet water inside.' };
+const FCOL = { Red: [['Strawberry', 'Cherry', 'Apple'], ['Banana', 'Lemon', 'Pineapple', 'Coconut']], Yellow: [['Banana', 'Lemon', 'Pineapple'], ['Strawberry', 'Cherry', 'Coconut', 'Grapes']], Purple: [['Grapes'], ['Banana', 'Lemon', 'Strawberry', 'Coconut', 'Pineapple']], Brown: [['Coconut'], ['Banana', 'Strawberry', 'Cherry', 'Lemon']], Green: [['Pear'], ['Banana', 'Strawberry', 'Cherry', 'Lemon', 'Coconut']] };
+const fopt = (n) => `${FE[n]} ${n}`;
+const plural = (s) => (/y$/.test(s) ? s.slice(0, -1) + 'ies' : /(ch|sh|s|x)$/.test(s) ? s + 'es' : s + 's');
+const plQs = (n) => sample(['Apple', 'Banana', 'Strawberry', 'Cherry', 'Peach', 'Orange'], n).map((nm) => { const s = nm.toLowerCase(); const k = 2 + R(4); const a = plural(s); return { p: `I have ${NW[k]} ___.`, v: FE[nm].repeat(k), a, w: uniq([s, s + 's', s + 'es', s.replace(/y$/, '') + 'ies']).filter((x) => x !== a) }; });
+
+const SC = [['Book', '📖'], ['Pencil', '✏️'], ['Pen', '🖊️'], ['Ruler', '📏'], ['Backpack', '🎒'], ['Scissors', '✂️'], ['Crayons', '🖍️'], ['Notebook', '📓'], ['Clock', '🕒'], ['Globe', '🌍'], ['Computer', '💻'], ['Paint', '🎨']];
+const DA = [['Eat', '🍽️'], ['Drink', '🥛'], ['Sleep', '😴'], ['Read', '📖'], ['Run', '🏃'], ['Swim', '🏊'], ['Sing', '🎤'], ['Dance', '💃'], ['Draw', '🎨'], ['Play', '⚽'], ['Walk', '🚶'], ['Cook', '🍳']];
+const BP = [['Eyes', '👀'], ['Ear', '👂'], ['Nose', '👃'], ['Mouth', '👄'], ['Hand', '✋'], ['Foot', '🦶'], ['Leg', '🦵'], ['Arm', '💪'], ['Tooth', '🦷'], ['Tongue', '👅']];
+const pics = (list, prompt, n) => sample(list, n).map(([nm, e]) => ({ p: prompt, v: e, a: nm, w: list.map((x) => x[0]).filter((x) => x !== nm) }));
+
+const GEN = {
+  alphabet: {
+    1: () => [...startQs(4), ...nextQs(3), ...smallQs(3)],
+    2: () => [...startQs(4), ...missQs(W3, 3), ...beforeQs(3)],
+    3: () => [...missQs(W4, 4), ...vowelQs(3), ...betweenQs(3)]
+  },
+  numbers: {
+    1: () => [...countQs(5), ...w2d(3, 2, 10), ...d2w(2, 2, 10)],
+    2: () => [...w2d(3, 5, 20), ...d2w(3, 5, 20), ...addQs(4, 2, 10, true)],
+    3: () => [...addQs(3, 11, 20, false), ...subQs(2), ...tensQs(), ...patQs(2), ...bigQs()]
+  },
+  colors: {
+    1: () => sample(CN, 10).map(([nm, hex]) => ({ p: 'What color is this?', v: hex, a: nm, w: CNAMES.filter((x) => x !== nm) })),
+    2: () => CI.map(([e, nm, c]) => ({ p: `What color is the ${nm}?`, v: e, a: c, w: CNAMES.filter((x) => x !== c) })),
+    3: () => [
+      ...[['🔴 + 🟡 = ?', 'Orange'], ['🔵 + 🟡 = ?', 'Green'], ['🔴 + 🔵 = ?', 'Purple'], ['🔴 + ⚪ = ?', 'Pink'], ['⚫ + ⚪ = ?', 'Gray']].map(([v, a]) => ({ p: 'What color do you get?', v, a, w: CNAMES.filter((x) => x !== a) })),
+      ...[['The sky is ___ on a sunny day.', '☁️', 'Blue'], ['Grass is ___.', '🌱', 'Green'], ['Snow is ___.', '❄️', 'White'], ['The sun is ___.', '☀️', 'Yellow'], ['A ripe tomato is ___.', '🍅', 'Red']].map(([p, v, a]) => ({ p, v, a, w: CNAMES.filter((x) => x !== a) })),
+      { p: 'Which color is NOT in the rainbow?', v: '🌈', a: sample(['Black', 'Brown', 'Pink', 'White', 'Gray'], 1)[0], w: ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple'] }
+    ]
+  },
+  animals: {
+    1: () => picName(['Cat', 'Dog', 'Bird', 'Fish', 'Cow', 'Duck', 'Pig', 'Horse', 'Rabbit', 'Lion', 'Elephant', 'Monkey', 'Frog', 'Bear', 'Sheep'], 10),
+    2: () => {
+      const snd = Object.keys(AN).filter((k) => AN[k][1]);
+      const sounds = sample(snd, 5).map((nm) => ({ p: `Which animal says "${AN[nm][1]}"?`, v: '🔊', a: opt(nm), w: snd.filter((x) => x !== nm).map(opt) }));
+      return [...sounds, ...picName(['Tiger', 'Giraffe', 'Butterfly', 'Turtle', 'Chicken', 'Elephant', 'Monkey', 'Bear', 'Rabbit', 'Bee'], 5)];
+    },
+    3: () => [
+      groupQ('Which animal lives in the water?', '🌊', ['Fish', 'Whale', 'Dolphin', 'Shark', 'Octopus'], sample(['Cat', 'Dog', 'Cow', 'Lion', 'Pig'], 3)),
+      groupQ('Which animal can fly?', '☁️', ['Bird', 'Butterfly', 'Bee', 'Eagle', 'Owl'], sample(['Dog', 'Cow', 'Fish', 'Pig', 'Sheep'], 3)),
+      groupQ('Which animal lives on a farm?', '🚜', ['Cow', 'Pig', 'Sheep', 'Horse', 'Chicken'], sample(['Lion', 'Tiger', 'Elephant', 'Giraffe', 'Zebra'], 3)),
+      groupQ('Which animal lives in the wild?', '🌴', ['Lion', 'Tiger', 'Elephant', 'Giraffe', 'Zebra'], sample(['Cow', 'Pig', 'Sheep', 'Chicken', 'Duck'], 3)),
+      ...sample(BABY, 3).map(([par, baby]) => ({ p: `A baby ${par.toLowerCase()} is called a ___.`, v: AN[par][0], a: baby, w: BABY.map((b) => b[1]).filter((x) => x !== baby) })),
+      ...sample(RID, 4).map(([p, nm]) => ({ p, v: '🤔', a: nm, w: RID.map((r) => r[1]).filter((x) => x !== nm).concat(['Cat', 'Dog']) }))
+    ]
+  },
+  fruits: {
+    1: () => sample(FR, 10).map(([nm, e]) => ({ p: 'What fruit is this?', v: e, a: nm, w: FNAMES.filter((x) => x !== nm) })),
+    2: () => [
+      ...sample(Object.keys(FCOL), 5).map((c) => ({ p: `Which fruit is ${c.toLowerCase()}?`, v: '=' + c, a: fopt(sample(FCOL[c][0], 1)[0]), w: FCOL[c][1].map(fopt) })),
+      ...sample(FR, 5).map(([nm, e]) => ({ p: `Which picture is a ${nm.toLowerCase()}?`, v: '=' + nm, a: e, w: FR.map((f) => f[1]).filter((x) => x !== e), pic: true }))
+    ],
+    3: () => [
+      ...sample(FNAMES, 5).map((nm) => ({ p: FCLUE[nm], v: '🤔', a: nm, w: FNAMES.filter((x) => x !== nm) })),
+      ...plQs(3),
+      ...sample(['🥕 Carrot', '🥔 Potato', '🥦 Broccoli', '🍞 Bread', '🥛 Milk'], 2).map((a) => ({ p: 'Which one is NOT a fruit?', v: '🧺', a, w: sample(FNAMES, 3).map(fopt) }))
+    ]
+  },
+  family: {
+    1: () => H([
+      ['Who is this?', '👩', 'Mom', ['Dad', 'Sister', 'Baby', 'Grandma']],
+      ['Who is this?', '👨', 'Dad', ['Mom', 'Brother', 'Baby', 'Grandpa']],
+      ['Who is this?', '👧', 'Sister', ['Brother', 'Mom', 'Baby', 'Dad']],
+      ['Who is this?', '👦', 'Brother', ['Sister', 'Dad', 'Baby', 'Grandpa']],
+      ['Who is this?', '👵', 'Grandma', ['Mom', 'Sister', 'Baby', 'Dad']],
+      ['Who is this?', '👴', 'Grandpa', ['Dad', 'Brother', 'Baby', 'Mom']],
+      ['Who is this?', '👶', 'Baby', ['Mom', 'Dad', 'Grandpa', 'Sister']],
+      ['Which picture is "Mom"?', '=Mom', '👩', ['👨', '👴', '👦', '👶'], 1],
+      ['Which picture is "Dad"?', '=Dad', '👨', ['👩', '👵', '👧', '👶'], 1],
+      ['Which picture is "Grandma"?', '=Grandma', '👵', ['👴', '👩', '👧', '👶'], 1],
+      ['Which picture is "Brother"?', '=Brother', '👦', ['👧', '👶', '👵', '👩'], 1]
+    ]),
+    2: () => H([
+      ['Mommy is another word for ___.', '👩', 'Mother', ['Father', 'Sister', 'Aunt']],
+      ['Daddy is another word for ___.', '👨', 'Father', ['Mother', 'Brother', 'Uncle']],
+      ['My mother\'s mother is my ___.', '👵', 'Grandmother', ['Aunt', 'Sister', 'Mother']],
+      ['My father\'s father is my ___.', '👴', 'Grandfather', ['Uncle', 'Brother', 'Father']],
+      ['My father\'s brother is my ___.', '👨', 'Uncle', ['Cousin', 'Brother', 'Grandfather']],
+      ['My mother\'s sister is my ___.', '👩', 'Aunt', ['Cousin', 'Sister', 'Grandmother']],
+      ['My mother\'s daughter is my ___.', '👧', 'Sister', ['Aunt', 'Cousin', 'Grandmother']],
+      ['My mother\'s son is my ___.', '👦', 'Brother', ['Uncle', 'Cousin', 'Grandfather']],
+      ['Mom, Dad, brother, sister and me make a ___.', '👨‍👩‍👧‍👦', 'Family', ['Team', 'Class', 'School']],
+      ['A ___ is a very small child.', '👶', 'Baby', ['Uncle', 'Grandpa', 'Father']],
+      ['Which word means a mother or a father?', '👫', 'Parent', ['Cousin', 'Baby', 'Friend']]
+    ]),
+    3: () => H([
+      ['She is my mother\'s sister. She is my ___.', '👩', 'Aunt', ['Cousin', 'Sister', 'Grandmother']],
+      ['He is my aunt\'s son. He is my ___.', '👦', 'Cousin', ['Brother', 'Uncle', 'Father']],
+      ['She is my father\'s mother. She is my ___.', '👵', 'Grandmother', ['Aunt', 'Mother', 'Sister']],
+      ['My brother and sister are my ___.', '👫', 'Siblings', ['Parents', 'Cousins', 'Neighbors']],
+      ['This is ___ family.', '🏠', 'my', ['me', 'I', 'mine']],
+      ['This is my sister. ___ name is Ana.', '👧', 'Her', ['His', 'Him', 'She']],
+      ['This is my brother. ___ is ten years old.', '👦', 'He', ['She', 'Her', 'It']],
+      ['Grandma and Grandpa are my ___.', '👴', 'grandparents', ['siblings', 'cousins', 'uncles']],
+      ['My father and mother are my ___.', '👨', 'parents', ['cousins', 'babies', 'friends']],
+      ['I have two ___. (brother)', '👦', 'brothers', ['brother', 'brotheres', 'brothrs']],
+      ['My mother has a brother. He is my ___.', '👨', 'uncle', ['aunt', 'cousin', 'sister']],
+      ['We ___ a happy family.', '😀', 'are', ['is', 'am', 'be']]
+    ])
+  },
+  body: {
+    1: () => pics(BP, 'What body part is this?', 10),
+    2: () => H([
+      ['We see with our ___.', '🌈', 'Eyes', ['Ears', 'Nose', 'Hands']],
+      ['We hear with our ___.', '🎵', 'Ears', ['Eyes', 'Nose', 'Feet']],
+      ['We smell with our ___.', '🌸', 'Nose', ['Ears', 'Eyes', 'Hands']],
+      ['We taste with our ___.', '🍦', 'Tongue', ['Ears', 'Eyes', 'Feet']],
+      ['We clap with our ___.', '👏', 'Hands', ['Feet', 'Ears', 'Nose']],
+      ['We walk with our ___.', '🚶', 'Legs', ['Hands', 'Ears', 'Eyes']],
+      ['We chew with our ___.', '🍪', 'Teeth', ['Eyes', 'Ears', 'Hands']],
+      ['We wear a hat on our ___.', '🎩', 'Head', ['Feet', 'Hands', 'Legs']],
+      ['We kick a ball with our ___.', '⚽', 'Foot', ['Hand', 'Ear', 'Nose']],
+      ['We wave with our ___.', '👋', 'Hand', ['Foot', 'Ear', 'Nose']],
+      ['We open our ___ to eat.', '🍽️', 'Mouth', ['Ears', 'Eyes', 'Nose']]
+    ]),
+    3: () => H([
+      ['How many eyes do you have?', '👀', 'Two', ['One', 'Three', 'Four']],
+      ['How many noses do you have?', '👃', 'One', ['Two', 'Three', 'Five']],
+      ['How many fingers are on one hand?', '✋', 'Five', ['Four', 'Six', 'Ten']],
+      ['How many toes are on two feet?', '🦶', 'Ten', ['Five', 'Eight', 'Twelve']],
+      ['How many ears do you have?', '👂', 'Two', ['One', 'Three', 'Four']],
+      ['One foot, two ___.', '🦶', 'feet', ['foots', 'footes', 'foot']],
+      ['One tooth, many ___.', '🦷', 'teeth', ['tooths', 'toothes', 'tooth']],
+      ['One hand, two ___.', '✋', 'hands', ['handes', 'hand', 'handz']],
+      ['Which one is NOT a body part?', '❓', 'Chair', ['Arm', 'Leg', 'Nose']],
+      ['I am on your face. I help you smell.', '🤔', 'Nose', ['Ear', 'Mouth', 'Hand']],
+      ['I am in your mouth. I help you taste.', '🤔', 'Tongue', ['Foot', 'Eye', 'Arm']],
+      ['I have five fingers.', '🤔', 'Hand', ['Foot', 'Ear', 'Nose']],
+      ['We use our ___ to run and walk.', '🏃', 'legs', ['ears', 'eyes', 'hands']]
+    ])
+  },
+  school: {
+    1: () => pics(SC, 'What is this?', 10),
+    2: () => H([
+      ['We write with a ___.', '✏️', 'Pencil', ['Ruler', 'Scissors', 'Globe']],
+      ['We cut paper with ___.', '✂️', 'Scissors', ['Book', 'Pencil', 'Clock']],
+      ['We read a ___.', '📚', 'Book', ['Ruler', 'Backpack', 'Scissors']],
+      ['We carry our books in a ___.', '🎒', 'Backpack', ['Clock', 'Ruler', 'Globe']],
+      ['We measure with a ___.', '📏', 'Ruler', ['Book', 'Clock', 'Paint']],
+      ['We color with ___.', '🖍️', 'Crayons', ['Scissors', 'Clock', 'Backpack']],
+      ['We look at a ___ to tell the time.', '🕒', 'Clock', ['Globe', 'Ruler', 'Notebook']],
+      ['We find countries on a ___.', '🌍', 'Globe', ['Clock', 'Pencil', 'Backpack']],
+      ['We type on a ___.', '⌨️', 'Computer', ['Ruler', 'Book', 'Paint']],
+      ['We write notes in a ___.', '📓', 'Notebook', ['Scissors', 'Globe', 'Ruler']],
+      ['We ring the ___ for recess.', '🔔', 'Bell', ['Book', 'Ruler', 'Globe']]
+    ]),
+    3: () => [
+      ...H([
+        ['One book, two ___.', '📖', 'books', ['bookes', 'bookies', 'bookz']],
+        ['One pencil, two ___.', '✏️', 'pencils', ['pencilz', 'penciles', 'pencilies']],
+        ['One ruler, three ___.', '📏', 'rulers', ['rulerz', 'ruleres', 'rulerys']],
+        ['Which is spelled correctly?', '✏️', 'Pencil', ['Pensil', 'Pencel', 'Pencle']],
+        ['Which is spelled correctly?', '🎒', 'Backpack', ['Bakpack', 'Backpak', 'Bagpack']],
+        ['Which is spelled correctly?', '📏', 'Ruler', ['Rular', 'Rulor', 'Rullar']],
+        ['Which is spelled correctly?', '✂️', 'Scissors', ['Sisors', 'Scisors', 'Scissers']],
+        ['Which is spelled correctly?', '🖍️', 'Crayon', ['Crayen', 'Crayan', 'Craion']],
+        ['I have pages. You can read me.', '🤔', 'Book', ['Ruler', 'Clock', 'Globe']],
+        ['You use me to draw a straight line.', '🤔', 'Ruler', ['Book', 'Backpack', 'Crayon']],
+        ['I have two blades. I cut paper.', '🤔', 'Scissors', ['Pencil', 'Notebook', 'Globe']],
+        ['The teacher writes on the ___.', '🏫', 'board', ['bag', 'clock', 'pencil']]
+      ]),
+      ...['🍌 Banana', '🛏️ Bed', '🚗 Car'].slice(0, 3).map((a) => ({ p: 'Which one is NOT a school object?', v: '🏫', a, w: ['✏️ Pencil', '📖 Book', '📏 Ruler', '✂️ Scissors', '🎒 Backpack'] }))
+    ]
+  },
+  daily: {
+    1: () => sample(DA, 10).map(([nm, e]) => ({ p: 'What do you do?', v: e, a: nm, w: DA.map((d) => d[0]).filter((x) => x !== nm) })),
+    2: () => H([
+      ['I wake up in the ___.', '🌅', 'morning', ['night', 'evening', 'midnight']],
+      ['I go to bed at ___.', '🌙', 'night', ['morning', 'noon', 'breakfast']],
+      ['I eat breakfast in the ___.', '🥣', 'morning', ['night', 'evening', 'midnight']],
+      ['I brush my ___ every day.', '🦷', 'teeth', ['ears', 'eyes', 'hands']],
+      ['I wash my ___ before I eat.', '🧼', 'hands', ['ears', 'shoes', 'books']],
+      ['I go to ___ on weekdays.', '🏫', 'school', ['sleep', 'bed', 'zoo']],
+      ['I take a ___ before I sleep.', '🛁', 'bath', ['bus', 'ball', 'bag']],
+      ['At night, I ___.', '🌙', 'sleep', ['swim', 'play', 'dance']],
+      ['I ___ my lunch at noon.', '🍱', 'eat', ['ride', 'sing', 'sleep']],
+      ['What do you do with a book?', '📖', 'Read', ['Eat', 'Swim', 'Drink']],
+      ['What do you do with a ball?', '⚽', 'Play', ['Eat', 'Sleep', 'Drink']]
+    ]),
+    3: () => H([
+      ['He ___ to school every day.', '🚌', 'goes', ['go', 'going', 'gone']],
+      ['I ___ up at six o\'clock.', '⏰', 'wake', ['wakes', 'waking', 'woke']],
+      ['She ___ her teeth every morning.', '🦷', 'brushes', ['brush', 'brushing', 'brushed']],
+      ['They are ___ football now.', '⚽', 'playing', ['play', 'plays', 'played']],
+      ['The boy is ___ a book.', '📖', 'reading', ['read', 'reads', 'readed']],
+      ['Yesterday, I ___ to the park.', '🌳', 'went', ['go', 'goes', 'going']],
+      ['What do you do first in the morning?', '🌅', 'Wake up', ['Sleep', 'Go to bed', 'Eat dinner']],
+      ['She is ___ a song.', '🎤', 'singing', ['sing', 'sings', 'sung']],
+      ['We ___ lunch at school.', '🍱', 'eat', ['eats', 'eating', 'eated']],
+      ['Mom is ___ dinner.', '🍳', 'cooking', ['cook', 'cooks', 'cooked']],
+      ['My sister ___ a bike to school.', '🚴', 'rides', ['ride', 'riding', 'rided']]
+    ])
+  },
+  grammar: {
+    1: () => H([
+      ['I ___ a boy.', '👦', 'am', ['is', 'are', 'be']],
+      ['She ___ a girl.', '👧', 'is', ['am', 'are', 'be']],
+      ['They ___ happy.', '😀', 'are', ['is', 'am', 'be']],
+      ['He ___ my brother.', '👦', 'is', ['am', 'are', 'be']],
+      ['We ___ friends.', '🤝', 'are', ['is', 'am', 'be']],
+      ['This is ___ apple.', '🍎', 'an', ['a', 'two', 'is']],
+      ['This is ___ dog.', '🐶', 'a', ['an', 'two', 'is']],
+      ['That is ___ egg.', '🥚', 'an', ['a', 'two', 'are']],
+      ['I see ___ elephant.', '🐘', 'an', ['a', 'two', 'is']],
+      ['I have ___ cat.', '🐱', 'a', ['an', 'two', 'are']],
+      ['___ is a boy.', '👦', 'He', ['She', 'It', 'They']],
+      ['___ is a girl.', '👧', 'She', ['He', 'It', 'They']],
+      ['___ is a dog.', '🐶', 'It', ['They', 'We', 'You']],
+      ['The opposite of big is ___.', '🐘', 'small', ['tall', 'long', 'fat']]
+    ]),
+    2: () => H([
+      ['One cat, two ___.', '🐱', 'cats', ['cates', 'catz', 'cat']],
+      ['One box, two ___.', '📦', 'boxes', ['boxs', 'boxies', 'boxen']],
+      ['One child, two ___.', '🧒', 'children', ['childs', 'childen', 'childes']],
+      ['One baby, two ___.', '👶', 'babies', ['babys', 'babyes', 'babis']],
+      ['I ___ a pen.', '🖊️', 'have', ['has', 'am', 'is']],
+      ['She ___ a red bag.', '🎒', 'has', ['have', 'am', 'are']],
+      ['He ___ two sisters.', '👨', 'has', ['have', 'are', 'am']],
+      ['We ___ a dog.', '🐶', 'have', ['has', 'is', 'am']],
+      ['The opposite of hot is ___.', '🔥', 'cold', ['warm', 'wet', 'big']],
+      ['The opposite of up is ___.', '⬆️', 'down', ['left', 'top', 'over']],
+      ['The opposite of happy is ___.', '😀', 'sad', ['glad', 'fun', 'good']],
+      ['The opposite of fast is ___.', '🐇', 'slow', ['quick', 'big', 'loud']],
+      ['___ am a student.', '🎓', 'I', ['He', 'She', 'They']]
+    ]),
+    3: () => H([
+      ['Yesterday I ___ a cake.', '🍰', 'ate', ['eat', 'eats', 'eating']],
+      ['She ___ happy yesterday.', '😀', 'was', ['is', 'am', 'are']],
+      ['There ___ three birds in the tree.', '🌳', 'are', ['is', 'am', 'be']],
+      ['There ___ a book on the table.', '📖', 'is', ['are', 'am', 'were']],
+      ['___ is your name?', '🙋', 'What', ['Where', 'Who', 'When']],
+      ['___ do you live?', '🏠', 'Where', ['What', 'Who', 'Why']],
+      ['___ is your teacher? She is Mrs. Lee.', '🏫', 'Who', ['Where', 'When', 'Why']],
+      ['This bag belongs to me. It is ___ bag.', '🎒', 'my', ['me', 'I', 'mine']],
+      ['Anna has a book. It is ___ book.', '📖', 'her', ['she', 'hers', 'he']],
+      ['I can ___ very fast.', '🏃', 'run', ['runs', 'running', 'ran']],
+      ['He ___ not like milk.', '🥛', 'does', ['do', 'are', 'am']],
+      ['My dog is ___ than your dog.', '🐕', 'bigger', ['more big', 'biggest', 'bigest']],
+      ['I am ___ than my brother.', '📏', 'taller', ['tallest', 'more tall', 'tallr']],
+      ['They ___ playing now.', '⚽', 'are', ['is', 'am', 'was']],
+      ['Which sentence is correct?', '✅', 'She likes apples.', ['She like apples.', 'She liking apples.', 'She are like apples.']],
+      ['Which sentence is correct?', '✅', 'I am eight years old.', ['I is eight years old.', 'I are eight years old.', 'I eight years old am.']]
+    ])
+  }
+};
+
+/* Mengubah satu butir soal menjadi soal siap main: 4 pilihan unik, urutan acak */
+function finalize(q) {
+  const wrongs = sample(uniq(q.w.filter((x) => x !== q.a)), 3);
+  return Object.assign({}, q, { opts: shuffle([q.a, ...wrongs]) });
+}
+function buildQuiz(cat, grade) {
+  return sample(GEN[cat][grade](), 10).map(finalize);
+}
+//#DATA-END
+
+/* ===== Aplikasi ===== */
+(function () {
+  'use strict';
+  const $ = (s, r) => (r || document).querySelector(s);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+  const CATS = [
+    { id: 'alphabet', en: 'Alphabet', idn: 'Abjad', icon: '🔤', tone: 'blue' },
+    { id: 'numbers', en: 'Numbers', idn: 'Angka', icon: '🔢', tone: 'green' },
+    { id: 'colors', en: 'Colors', idn: 'Warna', icon: '🎨', tone: 'yellow' },
+    { id: 'animals', en: 'Animals', idn: 'Hewan', icon: '🐶', tone: 'green' },
+    { id: 'fruits', en: 'Fruits', idn: 'Buah', icon: '🍎', tone: 'yellow' },
+    { id: 'family', en: 'Family', idn: 'Keluarga', icon: '👪', tone: 'blue' },
+    { id: 'body', en: 'Body Parts', idn: 'Anggota Tubuh', icon: '🖐️', tone: 'yellow' },
+    { id: 'school', en: 'School Objects', idn: 'Benda Sekolah', icon: '✏️', tone: 'blue' },
+    { id: 'daily', en: 'Daily Activities', idn: 'Kegiatan Sehari-hari', icon: '⏰', tone: 'green' },
+    { id: 'grammar', en: 'Simple Grammar', idn: 'Tata Bahasa Sederhana', icon: '📝', tone: 'yellow' }
+  ];
+  const GRADES = {
+    1: { name: 'Grade 1', idn: 'Kelas 1', tag: 'Little Stars', icon: '🐣', secs: 30, tone: 'blue' },
+    2: { name: 'Grade 2', idn: 'Kelas 2', tag: 'Super Explorers', icon: '🦊', secs: 25, tone: 'green' },
+    3: { name: 'Grade 3', idn: 'Kelas 3', tag: 'Word Champions', icon: '🦁', secs: 20, tone: 'yellow' }
+  };
+  const GOOD = ['Awesome!', 'Great job!', 'Super!', 'You rock!', 'Fantastic!', 'Well done!', 'Yay!'];
+  const OOPS = ['Oops!', 'Nice try!', 'Almost!', 'Keep going!'];
+  const KEY = 'fun-english-for-kids-v1';
+
+  /* ---------- Penyimpanan ---------- */
+  let data = { name: '', sound: true, music: true, voice: true, timer: true, played: 0, best: {} };
+  try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && typeof saved === 'object') data = Object.assign(data, saved); } catch (e) {}
+  if (!data.best || typeof data.best !== 'object') data.best = {};
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} };
+  const starsFor = (score) => (score >= 90 ? 3 : score >= 70 ? 2 : score >= 50 ? 1 : 0);
+  const bestOf = (g, c) => data.best[g + '-' + c];
+  const totalStars = () => Object.values(data.best).reduce((s, b) => s + starsFor(b.score), 0);
+
+  /* ---------- Maskot ---------- */
+  function mascotSVG(mood) {
+    const eyes = mood === 'cheer'
+      ? '<path d="M54 80 q8 -11 16 0" fill="none" stroke="#19365C" stroke-width="5" stroke-linecap="round"/><path d="M90 80 q8 -11 16 0" fill="none" stroke="#19365C" stroke-width="5" stroke-linecap="round"/>'
+      : '<circle cx="62" cy="78" r="9" fill="#19365C"/><circle cx="98" cy="78" r="9" fill="#19365C"/><circle cx="65" cy="75" r="3" fill="#fff"/><circle cx="101" cy="75" r="3" fill="#fff"/>';
+    const brows = mood === 'oops' ? '<path d="M50 62 l20 7" stroke="#19365C" stroke-width="4.5" stroke-linecap="round"/><path d="M110 62 l-20 7" stroke="#19365C" stroke-width="4.5" stroke-linecap="round"/>' : '';
+    const mouth = mood === 'oops' ? '<path d="M72 112 q8 -7 16 0" fill="none" stroke="#C25A00" stroke-width="3.5" stroke-linecap="round"/>' : (mood === 'cheer' ? '<path d="M70 106 q10 14 20 0 z" fill="#FF7A59"/>' : '');
+    const wing = mood === 'wave' ? '<ellipse class="wing-r" cx="132" cy="94" rx="14" ry="26" fill="#FFC21A" transform="rotate(-18 132 94)"/>' : '<ellipse cx="132" cy="102" rx="14" ry="26" fill="#FFC21A" transform="rotate(14 132 102)"/>';
+    return '<path d="M80 30 q-6 -18 4 -24 q2 12 -4 24z" fill="#FFC21A"/><path d="M70 32 q-14 -12 -10 -22 q10 6 10 22z" fill="#FFC21A"/>'
+      + '<ellipse cx="28" cy="102" rx="14" ry="26" fill="#FFC21A" transform="rotate(-14 28 102)"/>' + wing
+      + '<ellipse cx="62" cy="148" rx="12" ry="6" fill="#FF9A3C"/><ellipse cx="98" cy="148" rx="12" ry="6" fill="#FF9A3C"/>'
+      + '<circle cx="80" cy="88" r="58" fill="#FFD43B"/><ellipse cx="80" cy="110" rx="36" ry="30" fill="#FFF0A0"/>'
+      + '<circle cx="46" cy="98" r="9" fill="#FF9EB1" opacity=".7"/><circle cx="114" cy="98" r="9" fill="#FF9EB1" opacity=".7"/>'
+      + eyes + brows + '<path d="M69 94 L91 94 L80 108 Z" fill="#FF9A3C"/>' + mouth;
+  }
+  function setMascot(id, mood) { const s = $(id); if (s) s.innerHTML = mascotSVG(mood); }
+
+  /* ---------- Suara ---------- */
+  let ac = null;
+  function ctx() { if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ac = false; } } if (ac && ac.state === 'suspended') { try { ac.resume(); } catch (e) {} } return ac || null; }
+  function tone(f, t0, d, type, v) {
+    const c = ctx(); if (!c) return;
+    try {
+      const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + t0;
+      o.type = type || 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v || 0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + d + 0.05);
+    } catch (e) {}
+  }
+  const sfx = {
+    tap() { if (data.sound) tone(660, 0, 0.07, 'sine', 0.1); },
+    right() { if (data.sound) [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.09, 0.22, 'triangle', 0.2)); },
+    wrong() { if (data.sound) { tone(247, 0, 0.18, 'square', 0.09); tone(175, 0.17, 0.32, 'square', 0.09); } },
+    win() { if (data.sound) [523, 659, 784, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.13, 0.3, 'triangle', 0.2)); },
+    tryagain() { if (data.sound) [392, 349, 330].forEach((f, i) => tone(f, i * 0.16, 0.28, 'triangle', 0.16)); }
+  };
+  const hasSpeech = 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  const plain = (s) => String(s).replace(/[\u{1F000}-\u{1FFFF}\u{2190}-\u{27BF}\u{FE0F}]/gu, ' ').replace(/_{2,}/g, ' blank ').replace(/\s+/g, ' ').trim();
+  let voices = [];
+  function loadVoices() { try { voices = speechSynthesis.getVoices() || []; } catch (e) { voices = []; } }
+  if (hasSpeech) { loadVoices(); try { speechSynthesis.addEventListener('voiceschanged', loadVoices); } catch (e) { speechSynthesis.onvoiceschanged = loadVoices; } }
+  const pickVoice = () => voices.find((v) => /^en[-_]US/i.test(v.lang)) || voices.find((v) => /^en/i.test(v.lang)) || null;
+  let spoke = 0;
+  function voiceNote(show) { const n = $('#vnote'); if (n) n.hidden = !show; }
+  function speak(text) {
+    voiceNote(false);
+    if (!hasSpeech) { voiceNote(true); return; }
+    const t = plain(text); if (!t) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(t); const v = pickVoice();
+      if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+      u.rate = 0.85; u.pitch = 1.1; u.volume = 1;
+      const id = ++spoke; let started = false;
+      u.onstart = () => { started = true; duck(true); };
+      u.onend = () => duck(false);
+      u.onerror = (e) => { duck(false); if (!e || (e.error !== 'canceled' && e.error !== 'interrupted')) voiceNote(true); };
+      speechSynthesis.speak(u);
+      setTimeout(() => { if (id === spoke && !started) voiceNote(true); }, 2000);
+    } catch (e) { voiceNote(true); }
+  }
+
+  /* Musik latar: melodi riang buatan sendiri (C mayor, 116 bpm), dimainkan lewat WebAudio */
+  const MEL = [72, 76, 79, 76, 72, 76, 79, null, 71, 74, 79, 74, 71, 74, 79, null, 69, 72, 76, 72, 69, 72, 76, null, 69, 72, 77, 72, 69, 72, 77, null,
+    72, 76, 79, 84, 79, 76, 72, null, 74, 79, 83, 79, 74, 71, 74, null, 77, 76, 77, 81, 77, 76, 74, 72, 72, null, 76, null, 79, null, 72, null];
+  const ROOT = [48, 43, 45, 41, 48, 43, 41, 48];
+  const STEP = 60 / 116 / 2;
+  const mf = (m) => 440 * Math.pow(2, (m - 69) / 12);
+  const music = { timer: null, step: 0, next: 0, gain: null, noise: null, ducked: false };
+  function musicLevel(v) { if (music.gain && ac) { try { music.gain.gain.setTargetAtTime(v, ac.currentTime, 0.08); } catch (e) {} } }
+  function duck(on) { music.ducked = on; if (music.timer) musicLevel(on ? 0.25 : 1); }
+  function mnote(f, t, d, type, vol) {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(music.gain); o.start(t); o.stop(t + d + 0.05);
+  }
+  function hat(t) {
+    if (!music.noise) { const b = ac.createBuffer(1, Math.floor(ac.sampleRate * 0.06), ac.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; music.noise = b; }
+    const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+    s.buffer = music.noise; f.type = 'highpass'; f.frequency.value = 7000;
+    g.gain.setValueAtTime(0.03, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    s.connect(f); f.connect(g); g.connect(music.gain); s.start(t);
+  }
+  function kick(t) {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+    g.gain.setValueAtTime(0.14, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+    o.connect(g); g.connect(music.gain); o.start(t); o.stop(t + 0.2);
+  }
+  function playStep(s, t) {
+    const m = MEL[s], bar = (s / 8) | 0, k = s % 8;
+    if (m != null) mnote(mf(m), t, STEP * 1.7, 'triangle', 0.07);
+    if (k === 0 || k === 4) { mnote(mf(ROOT[bar]), t, STEP * 3.2, 'sine', 0.11); kick(t); }
+    if (k === 2 || k === 6) mnote(mf(ROOT[bar] + 7), t, STEP * 1.6, 'sine', 0.07);
+    if (k % 2 === 1) hat(t);
+  }
+  function sched() {
+    if (!ac) return;
+    if (music.next < ac.currentTime - 0.3) music.next = ac.currentTime + 0.05;
+    while (music.next < ac.currentTime + 0.4) { playStep(music.step, music.next); music.next += STEP; music.step = (music.step + 1) % MEL.length; }
+  }
+  function musicStart() {
+    const c = ctx(); if (!c || music.timer) return;
+    try {
+      if (!music.gain) { music.gain = c.createGain(); music.gain.connect(c.destination); }
+      music.gain.gain.cancelScheduledValues(c.currentTime); music.gain.gain.setValueAtTime(0.0001, c.currentTime);
+      music.next = c.currentTime + 0.12;
+      music.timer = setInterval(sched, 100);
+      musicLevel(music.ducked ? 0.25 : 1);
+    } catch (e) {}
+  }
+  function musicStop() { if (music.timer) { clearInterval(music.timer); music.timer = null; musicLevel(0.0001); } }
+
+  /* ---------- Navigasi ---------- */
+  const views = ['home', 'grade', 'cats', 'quiz', 'result'];
+  let cur = 'home';
+  function go(name) {
+    cur = name;
+    views.forEach((v) => { $('#v-' + v).hidden = v !== name; });
+    $('#t-timer').disabled = name === 'quiz';
+    try { window.scrollTo({ top: 0 }); } catch (e) {}
+    const h = name === 'grade' ? $('#h-grade') : name === 'cats' ? $('#h-cats') : name === 'result' ? $('#h-result') : null;
+    if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
+    if (name === 'home') paintHome();
+  }
+
+  function paintTools() {
+    [['t-music', 'music', '🎵', '🎵', 'Music'], ['t-voice', 'voice', '🗣️', '🤐', 'Voice'], ['t-sound', 'sound', '🔊', '🔇', 'Sound'], ['t-timer', 'timer', '⏱️', '⏱️', 'Timer']].forEach(([id, key, on, off, label]) => {
+      const b = $('#' + id), v = !!data[key];
+      b.setAttribute('aria-pressed', String(v));
+      b.replaceChildren(el('span', 'emoji', v ? on : off), document.createTextNode(' ' + label + ' ' + (v ? 'On' : 'Off')));
+    });
+  }
+
+  /* ---------- Beranda ---------- */
+  function paintHome() {
+    const name = (data.name || '').trim();
+    const g = $('#greet'); g.replaceChildren(document.createTextNode('Hello, ' + (name || 'friend') + '!'), el('span', 'sub', 'Halo' + (name ? ', ' + name : '') + '! Ayo belajar bahasa Inggris.'));
+    $('#name').value = data.name || '';
+    $('#st-stars').textContent = String(totalStars());
+    $('#st-played').textContent = String(data.played || 0);
+    setMascot('#home-mascot', 'wave');
+  }
+
+  /* ---------- Pilih kelas & kategori ---------- */
+  let sel = { grade: 1, cat: null };
+  function paintGrades() {
+    const box = $('#grade-list'); box.replaceChildren();
+    [1, 2, 3].forEach((g) => {
+      const G = GRADES[g];
+      const got = CATS.reduce((s, c) => s + (bestOf(g, c.id) ? starsFor(bestOf(g, c.id).score) : 0), 0);
+      const b = el('button', 'pick grade t-' + G.tone); b.type = 'button';
+      b.append(el('span', 'ico', G.icon), el('h2', null, G.name), el('span', 'tag', G.tag), (() => { const s = el('span', 'sub', G.idn); return s; })(), el('span', 'best', '★ ' + got + ' / 30'));
+      b.addEventListener('click', () => { sfx.tap(); sel.grade = g; paintCats(); go('cats'); });
+      box.append(b);
+    });
+  }
+  function paintCats() {
+    const G = GRADES[sel.grade];
+    $('#cats-grade').textContent = G.icon + ' ' + G.name + ' · ' + G.tag;
+    const box = $('#cat-list'); box.replaceChildren();
+    CATS.forEach((c) => {
+      const best = bestOf(sel.grade, c.id);
+      const b = el('button', 'pick cat t-' + c.tone); b.type = 'button';
+      const st = el('span', 'stars'); st.setAttribute('aria-label', (best ? starsFor(best.score) : 0) + ' of 3 stars');
+      for (let i = 0; i < 3; i++) st.append(el('span', best && i < starsFor(best.score) ? 'on' : '', '★'));
+      b.append(el('span', 'ico', c.icon), el('h2', null, c.en), el('span', 'sub', c.idn), st, el('span', 'best', best ? 'Best: ' + best.score : 'Not played yet'));
+      b.addEventListener('click', () => { sfx.tap(); startQuiz(c.id, sel.grade); });
+      box.append(b);
+    });
+  }
+
+  /* ---------- Kuis ---------- */
+  let S = null; // sesi kuis
+  let timerId = null;
+
+  function startQuiz(cat, grade) {
+    sel.cat = cat; sel.grade = grade;
+    S = { cat, grade, qs: buildQuiz(cat, grade), i: 0, ok: 0, no: 0, locked: false, mistakes: [], left: 0, deadline: 0 };
+    go('quiz');
+    renderQ();
+  }
+  function setProg() {
+    const done = S.i + (S.locked ? 1 : 0);
+    $('#prog i').style.width = (done / S.qs.length * 100) + '%';
+    $('#prog').setAttribute('aria-valuenow', String(done));
+  }
+  function renderVis(v) {
+    const box = $('#vis'); box.replaceChildren(); box.classList.remove('many');
+    if (v.charAt(0) === '#') { const s = el('span', 'swatch'); s.style.background = v; box.append(s); }
+    else if (v.charAt(0) === '=') { const t = v.slice(1); box.append(el('span', 'bigtext' + (t.length > 9 ? ' long' : ''), t)); }
+    else { box.textContent = v; if (Array.from(v).length > 6) box.classList.add('many'); }
+  }
+  function renderQ() {
+    const q = S.qs[S.i];
+    S.locked = false;
+    $('#q-count').textContent = 'Question ' + (S.i + 1) + ' of ' + S.qs.length;
+    $('#q-score').textContent = String(S.ok * 10);
+    renderVis(q.v);
+    const t2 = $('#t2'); if (q.t2) { t2.textContent = q.t2; t2.hidden = false; } else t2.hidden = true;
+    const pr = $('#prompt'); pr.replaceChildren();
+    q.p.split('___').forEach((part, k, arr) => { pr.append(document.createTextNode(part)); if (k < arr.length - 1) pr.append(el('span', 'blank', ' ')); });
+    voiceNote(false);
+    const box = $('#opts'); box.replaceChildren();
+    const two = q.pic || q.opts.every((o) => o.length <= 4);
+    box.classList.toggle('two', !!two);
+    q.opts.forEach((o, idx) => {
+      const b = el('button', 'opt' + (q.pic ? ' pic' : '')); b.type = 'button';
+      b.append(el('span', 'n', String(idx + 1)), el('span', 't', o));
+      b.addEventListener('click', () => answer(idx));
+      box.append(b);
+    });
+    $('#dock').hidden = true;
+    setProg();
+    if (data.timer) startTimer(GRADES[S.grade].secs); else { $('#timer').hidden = true; }
+    if (data.voice) setTimeout(() => { if (S && S.qs[S.i] === q && !S.locked) speak(q.p); }, 350);
+  }
+
+  function startTimer(secs) {
+    stopTimer();
+    $('#timer').hidden = false;
+    S.total = secs; S.left = secs; S.deadline = Date.now() + secs * 1000;
+    tick();
+    timerId = setInterval(tick, 100);
+  }
+  function stopTimer() { if (timerId) { clearInterval(timerId); timerId = null; } }
+  function tick() {
+    S.left = Math.max(0, (S.deadline - Date.now()) / 1000);
+    $('#tnum').textContent = String(Math.ceil(S.left));
+    $('#tfill').style.width = (S.left / S.total * 100) + '%';
+    $('#timer').classList.toggle('low', S.left <= 6);
+    if (S.left <= 0) { stopTimer(); answer(null); }
+  }
+
+  function burst(target) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const r = target.getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    ['⭐', '✨', '🌟', '⭐', '✨', '🎉', '🌟', '⭐', '✨', '🎈'].forEach((e) => {
+      const s = el('span', 'burst emoji', e);
+      const ang = Math.random() * Math.PI * 2, dist = 70 + Math.random() * 90;
+      s.style.left = cx + 'px'; s.style.top = cy + 'px';
+      s.style.setProperty('--dx', Math.cos(ang) * dist + 'px'); s.style.setProperty('--dy', Math.sin(ang) * dist - 30 + 'px'); s.style.setProperty('--r', (Math.random() * 120 - 60) + 'deg');
+      document.body.append(s); setTimeout(() => s.remove(), 950);
+    });
+  }
+
+  function answer(idx) {
+    if (!S || S.locked) return;
+    S.locked = true; stopTimer();
+    const q = S.qs[S.i];
+    const timeout = idx === null;
+    const ok = !timeout && q.opts[idx] === q.a;
+    const btns = [...$('#opts').children];
+    btns.forEach((b, j) => {
+      b.disabled = true;
+      if (q.opts[j] === q.a) b.classList.add('right');
+      else if (j === idx) b.classList.add('wrong');
+      else b.classList.add('dim');
+    });
+    if (ok) S.ok++; else { S.no++; S.mistakes.push(q); }
+    $('#q-score').textContent = String(S.ok * 10);
+    setProg();
+
+    const dock = $('#dock');
+    dock.classList.toggle('bad', !ok);
+    $('#fb-title').textContent = ok ? GOOD[Math.floor(Math.random() * GOOD.length)] : (timeout ? "Time's up!" : OOPS[Math.floor(Math.random() * OOPS.length)]);
+    const p = $('#fb-text'); p.replaceChildren();
+    if (ok) p.append(document.createTextNode('That is correct! Jawabanmu benar.'));
+    else { p.append(document.createTextNode('The answer is '), el('b', null, q.a), document.createTextNode('. Ayo coba lagi di soal berikutnya!')); }
+    setMascot('#dock-mascot', ok ? 'cheer' : 'oops');
+    const last = S.i + 1 >= S.qs.length;
+    $('#next').textContent = last ? 'See Results ★' : 'Next →';
+    dock.hidden = false;
+
+    if (ok) { sfx.right(); burst(btns[idx]); } else sfx.wrong();
+    if (data.voice && hasSpeech && /[A-Za-z0-9]/.test(plain(q.a))) setTimeout(() => speak(q.a), ok ? 450 : 600);
+    try { $('#next').focus({ preventScroll: false }); } catch (e) {}
+  }
+
+  function nextQ() {
+    if (!S || !S.locked) return;
+    sfx.tap();
+    if (S.i + 1 < S.qs.length) { S.i++; renderQ(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }
+    else finish();
+  }
+
+  /* ---------- Hasil ---------- */
+  function finish() {
+    stopTimer();
+    const score = S.ok * 10;
+    const key = S.grade + '-' + S.cat;
+    const prev = data.best[key];
+    const isNew = !prev || score > prev.score;
+    if (isNew) data.best[key] = { score, correct: S.ok, date: Date.now() };
+    data.played = (data.played || 0) + 1;
+    save();
+
+    const st = starsFor(score);
+    [...$('#rstars').children].forEach((s, i) => s.classList.toggle('on', i < st));
+    $('#r-score').textContent = String(score);
+    $('#r-ok').textContent = String(S.ok);
+    $('#r-no').textContent = String(S.no);
+    $('#r-best').textContent = String(data.best[key].score);
+    $('#r-new').hidden = !(isNew && score > 0);
+
+    let msg, idn;
+    if (S.ok === 10) { msg = 'Perfect! You are an English superstar!'; idn = 'Sempurna! Kamu bintang bahasa Inggris!'; }
+    else if (S.ok >= 8) { msg = 'Wow! Great job! Almost perfect!'; idn = 'Hebat sekali! Hampir sempurna!'; }
+    else if (S.ok >= 6) { msg = 'Good work! Keep practicing!'; idn = 'Bagus! Terus berlatih ya!'; }
+    else if (S.ok >= 4) { msg = "Nice try! Let's practice again!"; idn = 'Coba lagi, kamu pasti bisa!'; }
+    else { msg = "Don't give up! You can do it!"; idn = 'Jangan menyerah! Ayo semangat!'; }
+    const m = $('#r-msg'); m.replaceChildren(document.createTextNode(msg), el('span', 'sub', idn));
+
+    setMascot('#res-mascot', S.ok >= 6 ? 'cheer' : 'oops');
+    const rev = $('#review'), list = $('#review-list'); list.replaceChildren();
+    if (S.mistakes.length) {
+      S.mistakes.forEach((q) => {
+        const li = el('li'); const v = q.v.charAt(0) === '#' || q.v.charAt(0) === '=' ? '📌' : (Array.from(q.v).length > 4 ? Array.from(q.v)[0] : q.v);
+        const t = el('div', 'rt'); t.append(document.createTextNode(q.p + ' '), el('b', null, '→ ' + q.a));
+        li.append(el('span', 'emoji', v), t); list.append(li);
+      });
+      rev.hidden = false;
+    } else rev.hidden = true;
+    go('result');
+    if (S.ok >= 6) sfx.win(); else sfx.tryagain();
+    if (st >= 2) setTimeout(() => burst($('#rstars')), 200);
+  }
+
+  /* ---------- Jendela konfirmasi keluar ---------- */
+  function openModal() { if (!S || !S.locked && cur !== 'quiz') return; if (!S.locked) { S.pausedLeft = S.left; stopTimer(); } $('#modal').hidden = false; setMascot('#modal-mascot', 'oops'); $('#m-stay').focus(); }
+  function closeModal(leave) {
+    $('#modal').hidden = true;
+    if (leave) { stopTimer(); S = null; paintCats(); go('cats'); return; }
+    if (S && !S.locked && data.timer) { S.deadline = Date.now() + (S.pausedLeft || S.left) * 1000; stopTimer(); timerId = setInterval(tick, 100); }
+  }
+
+  /* ---------- Pemasangan ---------- */
+  $('#brand').addEventListener('click', () => { if (cur === 'quiz') { openModal(); return; } sfx.tap(); go('home'); });
+  $('#play').addEventListener('click', () => { ctx(); sfx.tap(); paintGrades(); go('grade'); });
+  document.querySelectorAll('[data-nav]').forEach((b) => b.addEventListener('click', () => {
+    sfx.tap(); const to = b.getAttribute('data-nav'); if (to === 'grade') paintGrades(); go(to);
+  }));
+  $('#name').addEventListener('input', (e) => { data.name = e.target.value.slice(0, 14); save(); const n = data.name.trim(); const g = $('#greet'); g.replaceChildren(document.createTextNode('Hello, ' + (n || 'friend') + '!'), el('span', 'sub', 'Halo' + (n ? ', ' + n : '') + '! Ayo belajar bahasa Inggris.')); });
+  $('#t-sound').addEventListener('click', () => { data.sound = !data.sound; save(); paintTools(); if (data.sound) { ctx(); sfx.tap(); } });
+  $('#t-music').addEventListener('click', () => { data.music = !data.music; save(); paintTools(); if (data.music) musicStart(); else musicStop(); });
+  $('#t-voice').addEventListener('click', () => {
+    data.voice = !data.voice; save(); paintTools();
+    if (!data.voice) { try { speechSynthesis.cancel(); } catch (e) {} duck(false); voiceNote(false); }
+    else if (S && cur === 'quiz' && !S.locked) speak(S.qs[S.i].p);
+  });
+  $('#t-timer').addEventListener('click', () => { data.timer = !data.timer; save(); paintTools(); });
+  $('#quit').addEventListener('click', openModal);
+  $('#m-stay').addEventListener('click', () => closeModal(false));
+  $('#m-leave').addEventListener('click', () => closeModal(true));
+  $('#next').addEventListener('click', nextQ);
+  $('#listen').addEventListener('click', () => { ctx(); const q = S.qs[S.i]; const o = q.pic ? '' : q.opts.map(plain).filter(Boolean).join('. '); speak(q.p + (o ? '. ' + o : '')); });
+  $('#again').addEventListener('click', () => { sfx.tap(); startQuiz(S ? S.cat : sel.cat, S ? S.grade : sel.grade); });
+  $('#more').addEventListener('click', () => { sfx.tap(); paintCats(); go('cats'); });
+  $('#home').addEventListener('click', () => { sfx.tap(); go('home'); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#modal').hidden) { closeModal(false); return; }
+    if (cur !== 'quiz' || !S || !$('#modal').hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!S.locked) { const i = '1234'.indexOf(e.key); if (i >= 0 && i < S.qs[S.i].opts.length) answer(i); }
+  });
+
+  /* Browser baru mengizinkan suara setelah anak menyentuh layar sekali */
+  const unlock = () => { ctx(); if (data.music) musicStart(); };
+  document.addEventListener('pointerdown', unlock, { once: true });
+  document.addEventListener('keydown', unlock, { once: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { musicStop(); try { speechSynthesis.cancel(); } catch (e) {} }
+    else if (data.music && ac) musicStart();
+  });
+
+  paintTools();
+  setMascot('#modal-mascot', 'oops');
+  go('home');
+})();
+</script>
+
+</body>
+</html>
